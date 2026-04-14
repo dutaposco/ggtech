@@ -49,60 +49,72 @@
         </div>
 
         {{-- Carousel Container --}}
-        <div class="relative bg-slate-50/50 rounded-[3rem] p-8 md:p-16 border border-slate-100 min-h-[500px] flex items-center shadow-sm">
-            
+        <div
+            class="relative bg-slate-50/50 rounded-[3rem] p-8 md:p-16 pb-28 md:pb-16 border border-slate-100 min-h-[550px] md:min-h-[500px] flex items-center shadow-sm">
+
             @foreach($slides as $index => $s)
-                <div x-show="active === {{ $index }}" 
-                     x-transition:enter="transition ease-out duration-500"
-                     x-transition:enter-start="opacity-0 translate-x-12"
-                     x-transition:enter-end="opacity-100 translate-x-0"
-                     class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full"
-                     style="display: none;">
-                    
+                <div x-show="active === {{ $index }}" x-transition:enter="transition ease-out duration-500"
+                    x-transition:enter-start="opacity-0 translate-x-12" x-transition:enter-end="opacity-100 translate-x-0"
+                    class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full" style="display: none;">
+
                     {{-- Text Content --}}
-                    <div class="order-2 lg:order-1 text-center lg:text-left">
-                        <h3 class="text-4xl md:text-5xl font-black text-slate-900 mb-6 leading-tight">
+                    <div class="order-2 lg:order-1 text-center lg:text-left px-2">
+                        <h3 class="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-4 md:mb-6 leading-tight">
                             {{ $s['title'] }}
                         </h3>
-                        <p class="text-[17px] text-slate-500 font-medium leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0">
+                        <p
+                            class="text-[16px] md:text-[17px] text-slate-500 font-medium leading-relaxed mb-8 md:mb-10 max-w-xl mx-auto lg:mx-0">
                             {{ $s['desc'] }}
                         </p>
-                        <a href="#contact" @click.prevent="document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })" 
-                           class="inline-flex items-center gap-2 font-bold text-slate-900 border-b-2 border-slate-900 pb-1 hover:text-blue-600 hover:border-blue-600 transition-all">
+                        <a href="#contact"
+                            @click.prevent="document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })"
+                            class="inline-flex items-center gap-2 font-bold text-slate-900 border-b-2 border-slate-900 pb-1 hover:text-blue-600 hover:border-blue-600 transition-all">
                             {{ __('Learn More') }}
-                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
                         </a>
                     </div>
 
                     {{-- Visual Layering (3D Effect) --}}
-                    <div class="order-1 lg:order-2 relative h-[300px] md:h-[400px] perspective-1000">
-                        <div class="relative w-full h-full flex items-center justify-center translate-z-10">
-                            
+                    <div class="order-1 lg:order-2 relative h-[280px] md:h-[400px] perspective-1000 mb-8 lg:mb-0">
+                        <div
+                            class="relative w-full h-full flex items-center justify-center translate-z-10 scale-[0.85] md:scale-100">
+
                             {{-- Base Layer (Largest Card) --}}
-                            <div class="absolute w-64 h-64 md:w-80 md:h-80 rounded-[2rem] transform rotate-[-12deg] skew-x-[12deg] transition-all duration-500
-                                @if($s['color'] == 'orange') bg-orange-600 shadow-2xl shadow-orange-500/40 @elseif($s['color'] == 'emerald') bg-emerald-600 shadow-2xl shadow-emerald-500/40 @else bg-indigo-600 shadow-2xl shadow-indigo-500/40 @endif">
-                                
+                            <div
+                                class="absolute w-56 h-56 md:w-80 md:h-80 rounded-[2rem] transform rotate-[-12deg] skew-x-[12deg] transition-all duration-500
+                                    @if($s['color'] == 'orange') bg-orange-600 shadow-2xl shadow-orange-500/40 @elseif($s['color'] == 'emerald') bg-emerald-600 shadow-2xl shadow-emerald-500/40 @else bg-indigo-600 shadow-2xl shadow-indigo-500/40 @endif">
+
                                 {{-- Mini Icons Grid on Base Layer --}}
                                 <div class="grid grid-cols-2 gap-4 p-8 opacity-40">
-                                   @foreach(range(0, 3) as $i)
-                                      <div class="w-12 h-12 bg-white/20 rounded-xl"></div>
-                                   @endforeach
+                                    @foreach(range(0, 3) as $i)
+                                        <div class="w-10 h-10 md:w-12 md:h-12 bg-white/20 rounded-xl"></div>
+                                    @endforeach
                                 </div>
                             </div>
 
                             {{-- Middle Layer (Glass Effect) --}}
-                            <div class="absolute w-56 h-56 md:w-72 md:h-72 rounded-[1.5rem] bg-white/80 backdrop-blur-xl border border-white/40 shadow-xl transform rotate-[-12deg] skew-x-[12deg] translate-x-12 -translate-y-8 flex flex-col justify-end p-6 md:p-8 hover:translate-x-14 hover:-translate-y-10 transition-all duration-300">
-                                <span class="text-xs uppercase font-black tracking-widest text-slate-400 mb-1">Hubs</span>
-                                <span class="text-2xl font-black text-slate-900 tracking-tight">{{ $s['layers'][1] }}</span>
+                            <div
+                                class="absolute w-48 h-48 md:w-72 md:h-72 rounded-[1.5rem] bg-white/80 backdrop-blur-xl border border-white/40 shadow-xl transform rotate-[-12deg] skew-x-[12deg] translate-x-8 -translate-y-4 md:translate-x-12 md:-translate-y-8 flex flex-col justify-end p-5 md:p-8 hover:translate-x-14 hover:-translate-y-10 transition-all duration-300">
+                                <span
+                                    class="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1">Hubs</span>
+                                <span
+                                    class="text-xl md:text-2xl font-black text-slate-900 tracking-tight leading-none">{{ $s['layers'][1] }}</span>
                             </div>
 
                             {{-- Top Layer (Front Focus Card) --}}
-                            <div class="absolute w-48 h-48 md:w-64 md:h-64 rounded-[1.2rem] bg-white/90 backdrop-blur-2xl border border-white/60 shadow-2xl transform rotate-[-12deg] skew-x-[12deg] translate-x-24 -translate-y-16 flex flex-col justify-end p-6 md:p-8 hover:translate-x-28 hover:-translate-y-20 transition-all duration-300">
-                                <div class="w-12 h-12 rounded-xl @if($s['color'] == 'orange') bg-orange-100 text-orange-600 @elseif($s['color'] == 'emerald') bg-emerald-100 text-emerald-600 @else bg-indigo-100 text-indigo-600 @endif flex items-center justify-center mb-6 shadow-sm">
-                                    <div class="w-6 h-6">{!! $s['icons'][0] !!}</div>
+                            <div
+                                class="absolute w-40 h-40 md:w-64 md:h-64 rounded-[1.2rem] bg-white/90 backdrop-blur-2xl border border-white/60 shadow-2xl transform rotate-[-12deg] skew-x-[12deg] translate-x-16 -translate-y-8 md:translate-x-24 md:-translate-y-16 flex flex-col justify-end p-5 md:p-8 hover:translate-x-28 hover:-translate-y-20 transition-all duration-300">
+                                <div
+                                    class="w-10 h-10 md:w-12 md:h-12 rounded-xl @if($s['color'] == 'orange') bg-orange-100 text-orange-600 @elseif($s['color'] == 'emerald') bg-emerald-100 text-emerald-600 @else bg-indigo-100 text-indigo-600 @endif flex items-center justify-center mb-4 md:mb-6 shadow-sm">
+                                    <div class="w-5 h-5 md:w-6 md:h-6">{!! $s['icons'][0] !!}</div>
                                 </div>
-                                <span class="text-xs uppercase font-black tracking-widest text-slate-400 mb-1">{{ __('The Platform') }}</span>
-                                <span class="text-xl md:text-2xl font-black text-slate-900 tracking-tight">{{ $s['layers'][0] }}</span>
+                                <span
+                                    class="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1">{{ __('The Platform') }}</span>
+                                <span
+                                    class="text-lg md:text-2xl font-black text-slate-900 tracking-tight leading-none">{{ $s['layers'][0] }}</span>
                             </div>
 
                         </div>
@@ -112,26 +124,31 @@
             @endforeach
 
             {{-- Navigation Controls (Dots & Arrows) --}}
-            <div class="absolute bottom-10 left-0 w-full px-8 md:px-16 flex items-center justify-between">
+            <div class="absolute bottom-10 left-0 w-full px-6 md:px-16 flex items-center justify-between z-30">
                 {{-- Prev Arrow --}}
-                <button @click="active = (active - 1 + {{ count($slides) }}) % {{ count($slides) }}" 
-                        class="w-12 h-12 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center text-slate-400 hover:text-slate-900 hover:border-slate-400 transition-all hover:scale-110 active:scale-95">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
+                <button @click="active = (active - 1 + {{ count($slides) }}) % {{ count($slides) }}"
+                    class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-slate-200 bg-white shadow-md flex items-center justify-center text-slate-400 hover:text-slate-900 transition-all active:scale-95">
+                    <svg width="20" height="20" md:width="24" md:height="24" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+                    </svg>
                 </button>
 
-                {{-- Pagination Dots (Centered separately) --}}
-                <div class="absolute left-1/2 -translate-x-1/2 flex gap-3">
+                {{-- Pagination Dots --}}
+                <div class="flex gap-2 md:gap-3">
                     @foreach($slides as $index => $s)
-                        <button @click="active = {{ $index }}" 
-                                class="w-2.5 h-2.5 rounded-full transition-all duration-300"
-                                :class="active === {{ $index }} ? 'bg-slate-900 w-8' : 'bg-slate-300'"></button>
+                        <button @click="active = {{ $index }}" class="w-2.5 h-2.5 rounded-full transition-all duration-300"
+                            :class="active === {{ $index }} ? 'bg-slate-900 w-8' : 'bg-slate-300'"></button>
                     @endforeach
                 </div>
 
                 {{-- Next Arrow --}}
-                <button @click="active = (active + 1) % {{ count($slides) }}" 
-                        class="w-12 h-12 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center text-slate-400 hover:text-slate-900 hover:border-slate-400 transition-all hover:scale-110 active:scale-95">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+                <button @click="active = (active + 1) % {{ count($slides) }}"
+                    class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-slate-200 bg-white shadow-md flex items-center justify-center text-slate-400 hover:text-slate-900 transition-all active:scale-95">
+                    <svg width="20" height="20" md:width="24" md:height="24" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
                 </button>
             </div>
         </div>
@@ -142,6 +159,7 @@
     .perspective-1000 {
         perspective: 1500px;
     }
+
     .translate-z-10 {
         transform-style: preserve-3d;
     }

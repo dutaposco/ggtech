@@ -47,6 +47,8 @@
 <body class="font-outfit text-slate-800 bg-slate-50 antialiased overflow-x-hidden">
     {{ $slot }}
 
+    <x-ai-chat />
+
     <style>
         [x-cloak] {
             display: none !important;

@@ -50,21 +50,21 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             
             {{-- Left Side: Heading (HubSpot Style) --}}
-            <div class="lg:col-span-5 sticky top-32">
+            <div class="lg:col-span-5 lg:sticky lg:top-32 mb-12 lg:mb-0">
                 <div class="inline-flex items-center gap-2 bg-slate-100 text-slate-800 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-6">
                     <span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span> {{ __('Innovation Hub') }}
                 </div>
-                <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-8 tracking-tight leading-[1.1]">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-6 md:mb-8 tracking-tight leading-[1.1]">
                     {{ __('IT Solutions First Part') }} <span class="text-blue-600">{{ __('Ready-to-Use') }}</span>
                 </h2>
-                <p class="text-lg text-slate-500 font-medium leading-relaxed mb-10 max-w-md">
+                <p class="text-base md:text-lg text-slate-500 font-medium leading-relaxed mb-8 md:mb-10 max-w-md">
                     {{ __('Our IT products are designed for immediate deployment, easy configuration, and can be customized to your specific operational needs.') }}
                 </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#contact" class="px-8 py-3.5 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20">
+                <div class="flex flex-wrap gap-4 justify-start">
+                    <a href="#contact" class="flex-1 md:flex-none text-center px-8 py-3.5 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20">
                         {{ __('Contact Us') }}
                     </a>
-                    <a href="#services" class="px-8 py-3.5 bg-white border-2 border-slate-200 text-slate-700 font-bold rounded-xl hover:border-slate-900 transition-all">
+                    <a href="#services" class="flex-1 md:flex-none text-center px-8 py-3.5 bg-white border-2 border-slate-200 text-slate-700 font-bold rounded-xl hover:border-slate-900 transition-all">
                         {{ __('View Platforms') }}
                     </a>
                 </div>

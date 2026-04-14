@@ -28,37 +28,67 @@
 
     <div class="max-w-7xl mx-auto px-6 relative z-10">
         {{-- Section Heading --}}
-        <div class="text-center mb-20 max-w-4xl mx-auto">
-            <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-blue-100 text-blue-600 text-[11px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-8 shadow-sm">
+        <div class="text-center mb-12 md:mb-20 max-w-4xl mx-auto">
+            <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-blue-100 text-blue-600 text-[11px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 md:mb-8 shadow-sm">
                 {{ __('Infrastructure & Support') }}
             </div>
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-8 tracking-tighter leading-[1.05]">
+            <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-6 md:mb-8 tracking-tighter leading-[1.05]">
                 {{ __('Technology that works for your business 24/7.') }}
             </h2>
-            <p class="text-[19px] text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed">
+            <p class="text-base md:text-[19px] text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed">
                 {{ __('Breeze Subtitle') }}
             </p>
         </div>
 
         {{-- Card Showcase (HubSpot style) --}}
-        <div class="relative max-w-5xl mx-auto" x-data="{ active: 1 }">
-            <div class="flex items-center justify-center gap-6 md:gap-10 py-10 overflow-visible">
+        <div class="relative w-full overflow-hidden" 
+             x-data="{ 
+                active: 1,
+                scrollTo(index) {
+                    this.active = index;
+                    const container = this.$refs.slider;
+                    const card = container.children[index];
+                    const offset = card.offsetLeft - (container.offsetWidth / 2) + (card.offsetWidth / 2);
+                    container.scrollTo({ left: offset, behavior: 'smooth' });
+                },
+                updateActive() {
+                    const container = this.$refs.slider;
+                    const center = container.scrollLeft + (container.offsetWidth / 2);
+                    let closestIndex = 0;
+                    let minDiff = Infinity;
+                    
+                    Array.from(container.children).forEach((card, index) => {
+                        const diff = Math.abs((card.offsetLeft + card.offsetWidth / 2) - center);
+                        if (diff < minDiff) {
+                            minDiff = diff;
+                            closestIndex = index;
+                        }
+                    });
+                    this.active = closestIndex;
+                }
+             }">
+            
+            {{-- Scroll Container --}}
+            <div x-ref="slider"
+                 @scroll.debounce.50ms="updateActive()"
+                 class="flex items-center gap-4 md:gap-10 py-10 overflow-x-auto md:overflow-visible snap-x snap-mandatory no-scrollbar px-[10vw] md:px-0 md:justify-center">
+                
                 @foreach($features as $index => $f)
                     <div 
-                        class="shrink-0 w-[300px] md:w-[380px] bg-white border border-slate-200 rounded-[2.5rem] p-10 shadow-sm transition-all duration-500 cursor-pointer flex flex-col items-center text-center group"
+                        class="shrink-0 w-[80vw] xs:w-[300px] md:w-[380px] bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-10 shadow-sm transition-all duration-500 cursor-pointer flex flex-col items-center text-center group snap-center"
                         :class="{ 
-                            'scale-110 shadow-2xl z-20 border-blue-100': active === {{ $index }}, 
-                            'scale-90 opacity-40 blur-[1px] hover:opacity-100 hover:blur-0': active !== {{ $index }} 
+                            'scale-100 md:scale-110 shadow-2xl z-20 border-blue-100 ring-4 ring-blue-50/50': active === {{ $index }}, 
+                            'scale-[0.9] md:scale-95 opacity-50 md:opacity-40 md:blur-[1px]': active !== {{ $index }} 
                         }"
-                        @click="active = {{ $index }}"
+                        @click="scrollTo({{ $index }})"
                     >
                         {{-- Card Icon --}}
-                        <div class="w-20 h-20 rounded-3xl {{ $f['bg'] }} text-white flex items-center justify-center mb-10 shadow-xl shadow-{{ substr($f['bg'], 3, -4) }}-500/20 group-hover:scale-110 transition-transform duration-300">
-                            <div class="w-10 h-10">{!! $f['icon'] !!}</div>
+                        <div class="w-16 h-16 md:w-20 md:h-20 rounded-3xl {{ $f['bg'] }} text-white flex items-center justify-center mb-6 md:mb-10 shadow-xl shadow-{{ substr($f['bg'], 3, -4) }}-500/20 group-hover:scale-110 transition-transform duration-300">
+                            <div class="w-8 h-8 md:w-10 md:h-10">{!! $f['icon'] !!}</div>
                         </div>
 
-                        <h3 class="text-2xl font-black text-slate-900 mb-4 tracking-tight">{{ $f['title'] }}</h3>
-                        <p class="text-[16px] text-slate-500 font-medium leading-relaxed mb-8">
+                        <h3 class="text-xl md:text-2xl font-black text-slate-900 mb-4 tracking-tight">{{ $f['title'] }}</h3>
+                        <p class="text-[14px] md:text-[16px] text-slate-500 font-medium leading-relaxed mb-8">
                             {{ $f['desc'] }}
                         </p>
 
@@ -71,19 +101,29 @@
             </div>
 
             {{-- Slider Navigation --}}
-            <div class="flex items-center justify-center gap-4 mt-12">
-                <button @click="active = (active - 1 + {{ count($features) }}) % {{ count($features) }}" class="w-12 h-12 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-400 hover:text-slate-900 transition-all shadow-sm">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
+            <div class="flex items-center justify-center gap-4 mt-8">
+                <button @click="scrollTo((active - 1 + {{ count($features) }}) % {{ count($features) }})" class="w-11 h-11 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-400 hover:text-slate-900 transition-all shadow-sm active:scale-90">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
                 </button>
                 <div class="flex gap-2.5">
                     @foreach($features as $index => $f)
-                        <button @click="active = {{ $index }}" class="h-2 rounded-full transition-all duration-300" :class="active === {{ $index }} ? 'bg-slate-900 w-8' : 'bg-slate-200 w-2'"></button>
+                        <button @click="scrollTo({{ $index }})" class="h-2 rounded-full transition-all duration-300" :class="active === {{ $index }} ? 'bg-slate-900 w-8' : 'bg-slate-200 w-2'"></button>
                     @endforeach
                 </div>
-                <button @click="active = (active + 1) % {{ count($features) }}" class="w-12 h-12 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-400 hover:text-slate-900 transition-all shadow-sm">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+                <button @click="scrollTo((active + 1) % {{ count($features) }})" class="w-11 h-11 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-400 hover:text-slate-900 transition-all shadow-sm active:scale-90">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
                 </button>
             </div>
         </div>
     </div>
 </section>
+
+<style>
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>

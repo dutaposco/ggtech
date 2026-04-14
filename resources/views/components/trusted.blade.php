@@ -26,7 +26,8 @@
     <div class="flex w-[200%] animate-marquee items-center gap-24 px-12 hover:[animation-play-state:paused]">
         @foreach($doubled as $brand)
             <div class="flex-shrink-0 cursor-default flex items-center justify-center w-36 h-16">
-                <img src="{{ $brand['url'] }}" alt="Logo {{ $brand['name'] }}" class="max-w-full max-h-full object-contain"
+                <img src="{{ $brand['url'] }}" alt="Logo {{ $brand['name'] }}" 
+                    class="max-w-full max-h-full object-contain transition-transform duration-300 {{ $brand['name'] === 'Gaisar' ? 'scale-[1.8]' : '' }}"
                     loading="lazy" />
             </div>
         @endforeach
